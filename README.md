@@ -14,10 +14,10 @@
 ### Visual Studio Code 설정
 1. VSCode 실행
 2. File > Preferences > Settings
-  * Font Size: 각자 맞춰서 조절
-  * Auto Save: onFocusChange
-  * Tab Size: 2
-  * Detect Indentation: 체크 해제
+    * Font Size: 각자 맞춰서 조절
+    * Auto Save: onFocusChange
+    * Tab Size: 2
+    * Detect Indentation: 체크 해제
 3. 터미널 설정(기본 터미널을 PowerShell에서 Command Prompt로 변경)
 	* View > Terminal 선택
 	* VSCode 하단에 오픈된 TERMINAL 탭 우측 상단의 ˅ 선택 후 Select Default Profile 선택
