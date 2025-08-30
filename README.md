@@ -27,10 +27,10 @@
 4. Github 레퍼지토리 복사
     * 터미널에서 다음 명령 실행
 
-    ```sh
-    cd \
-    git clone https://github.com/multicampus/js-project.git
-    ```
+      ```sh
+      cd \
+      git clone https://github.com/multicampus/js-project.git
+      ```
 
     * File > Open Folder > c:\js-project 선택
 
