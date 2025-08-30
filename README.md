@@ -19,20 +19,20 @@
     * Tab Size: 2
     * Detect Indentation: 체크 해제
 3. 터미널 설정(기본 터미널을 PowerShell에서 Command Prompt로 변경)
-	* View > Terminal 선택
-	* VSCode 하단에 오픈된 TERMINAL 탭 우측 상단의 ˅ 선택 후 Select Default Profile 선택
-	* VSCode 상단의 선택상자에서 Command Prompt 선택
-	* VSCode 하단에 오픈된 TERMINAL 탭 우측 상단의 휴지통 클릭해서 터미널 종료
-	* View > Terminal 선택 후 오픈된 TERMINAL 탭 우측 상단에 cmd로 바뀌었는지 확인
+    * View > Terminal 선택
+    * VSCode 하단에 오픈된 TERMINAL 탭 우측 상단의 ˅ 선택 후 Select Default Profile 선택
+    * VSCode 상단의 선택상자에서 Command Prompt 선택
+    * VSCode 하단에 오픈된 TERMINAL 탭 우측 상단의 휴지통 클릭해서 터미널 종료
+    * View > Terminal 선택 후 오픈된 TERMINAL 탭 우측 상단에 cmd로 바뀌었는지 확인
 4. Github 레퍼지토리 복사
-  * 터미널에서 다음 명령 실행
+    * 터미널에서 다음 명령 실행
 
-  ```sh
-  cd \
-  git clone https://github.com/multicampus/js-project.git
-  ```
+    ```sh
+    cd \
+    git clone https://github.com/multicampus/js-project.git
+    ```
 
-  * File > Open Folder > c:\js-project 선택
+    * File > Open Folder > c:\js-project 선택
 
 ## 참조 사이트
 ### Nodejs
