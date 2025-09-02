@@ -10,6 +10,7 @@
   <link rel="stylesheet" media="all" type="text/css" href="/css/layout.css">
 
   <link rel="stylesheet" media="all" type="text/css" href="/css/detail.css">
+  <script src="/js/lib/jquery-3.6.4.min.js"></script>
   <script src="/js/detail.js"></script>
 </head>
 <body>
@@ -101,7 +102,7 @@
                 </li>
               </ul>
               <% if(coupon.quantity-coupon.buyQuantity > 0){ %>
-                <a href="/buy.html" class="buy">구매하기</a>
+                <a href="/purchase/<%=coupon._id%>" class="buy">구매하기</a>
               <% }else{ %>
                 <span class="soldout">매진</span>
               <% } %>

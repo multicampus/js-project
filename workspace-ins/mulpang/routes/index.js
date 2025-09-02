@@ -21,6 +21,12 @@ router.get('/coupons/:no', async function(req, res, next) {
   res.render('detail', { coupon, toStar });
 });
 
+// 쿠폰 구매 화면
+router.get('/purchase/:no', async function(req, res, next) {
+  const coupon = await model.buyCouponForm(Number(req.params.no));
+  res.render('buy', { coupon });
+});
+
 router.get('/:page.html', function(req, res, next) {
   res.render(req.params.page);
 });
