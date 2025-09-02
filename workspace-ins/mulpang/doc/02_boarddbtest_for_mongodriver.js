@@ -1,13 +1,42 @@
 const util = require('node:util');
 let db;
 
-// TODO: DB 접속
+// DB 접속
+const { MongoClient } = require('mongodb');
 
+// Connection URL
+const url = 'mongodb://localhost:27017';
+const client = new MongoClient(url);
+
+// Database Name
+const dbName = 'myProject';
+
+async function main() {
+  // Use connect method to connect to the server
+  await client.connect();
+  console.log('Connected successfully to server');
+  db = client.db(dbName);
+
+  // DB 초기화
+  await db.dropDatabase();
+
+  db.board = db.collection('board');
+
+  // the following code examples can be pasted here...
+  await task();
+
+  return 'done.';
+}
+
+main()
+  .then(console.log)
+  .catch(console.error)
+  .finally(() => client.close());
 
 async function task(){
   console.log(await todo1(), '\n');
   console.log(await todo2(), '\n');
-  // console.log(await todo3(), '\n');
+  console.log(await todo3(), '\n');
   // console.log(await todo4(), '\n');
   // console.log(await todo5(), '\n');
   // console.log(await todo6(), '\n');
@@ -32,20 +61,21 @@ const b3 = {_id: 3, name: "lee", title: "그렇다면 두번째 글은...", cont
 
 // insertOne({등록할 문서}), insertMany([{등록할 문서}, {등록할 문서}])
 async function todo1(){  
-  
+  await db.board.insertOne(b1);
+  await db.board.insertMany([ b2, b3 ]);
   return 'TODO 1. board 컬렉션에 데이터 등록';
 }
 
 // find()
 async function todo2(){
   console.log('TODO 2. 모든 board 데이터의 모든 속성 조회');
-  
+  return await db.board.find().toArray();
 }
 
 // find({검색조건})
 async function todo3(){
   console.log('TODO 3. 데이터 조회(kim이 작성한 게시물 조회)');
-	
+	return await db.board.find({ name: 'kim' }).toArray();
 }
 
 // find({검색조건}, {projection: {출력컬럼}})
