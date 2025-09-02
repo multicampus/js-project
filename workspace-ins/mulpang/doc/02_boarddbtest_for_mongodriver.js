@@ -134,7 +134,12 @@ async function todo10(){
 // 4. 한페이지당 5건 일때 2페이지를 조회.
 async function todo11(){
   console.log('TODO 11. mulpang DB coupon collection 조회');
-  const data = await db.coupon.find().project({ couponName: 1, 'saleDate.start': 1 }).toArray();
+  const data = await db.coupon.find()
+    .project({ couponName: 1, 'saleDate.start': 1 })
+    .sort({ 'saleDate.start': -1 }) // -1: 내림차순, 1: 오름차순
+    .skip(5)
+    .limit(5)
+    .toArray();
   
   console.log(data.length, '건 조회됨.');
   return data;
