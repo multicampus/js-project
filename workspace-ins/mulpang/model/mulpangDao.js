@@ -66,12 +66,35 @@ module.exports.couponList = async (qs={}) => {
 // 쿠폰 상세 조회
 module.exports.couponDetail = async (_id) => {
 	// coupon, shop, epilogue 조인
+  const coupon = await db.coupon.aggregate([
+    { $match: { _id } }, {
+      // shop 조인
+      $lookup: {
+        from: 'shop', // 조인 대상 컬렉션
+        localField: 'shopId', // coupon.shopId
+        foreignField: '_id', // shop._id
+        as: 'shop'
+      }
+    }, {
+      // shop 조인 결과를(배열) 낱개의 속성으로 변환한다.
+      $unwind: '$shop'
+    }, {
+      // epilogue 조인
+      $lookup: {
+        from: 'epilogue', // 조인 대상 컬렉션
+        localField: '_id', // coupon._id
+        foreignField: 'couponId', // epilogue.couponId
+        as: 'epilogueList'
+      }
+    }
+  ]).next();
 	
 	// 뷰 카운트를 하나 증가시킨다.
 	
 	// 웹소켓으로 수정된 조회수 top5를 전송한다.
 	
-
+  console.log(coupon);
+  return coupon;
 };
 
 // 구매 화면에 보여줄 쿠폰 정보 조회

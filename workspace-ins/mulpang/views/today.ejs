@@ -93,7 +93,7 @@
           <% list.forEach((coupon, i) => { %>
             <article class="p<%=i%>" tabindex="0">
               <h1><%=coupon.couponName%></h1>
-              <a href="/detail.html">
+              <a href="/coupons/<%=coupon._id%>">
                 <img class="list_img" src="/image/coupon/<%=coupon.image.main.file%>" alt="<%=coupon.image.main.desc%>">
               </a>
               <section class="content">						
@@ -103,6 +103,12 @@
               </section>
             </article>
           <% }); %>
+
+          <% for(let i=list.length; i<5; i++) { %>
+            <article class="p<%=i%> no_content">
+              <h1>등록된 상품이 없습니다.</h1>
+            </article>
+          <% } %>
 				</div>
 			</section>
 			<div id="coupon_control">

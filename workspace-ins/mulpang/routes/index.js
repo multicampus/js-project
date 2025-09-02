@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const model = require('../model/mulpangDao');
+const { toStar } = require('../utils/myutil');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -12,6 +13,12 @@ router.get('/', function(req, res, next) {
 router.get('/today', async function(req, res, next) {
   const list = await model.couponList();
   res.render('today', { list });
+});
+
+// 쿠폰 상세 조회 화면
+router.get('/coupons/:no', async function(req, res, next) {
+  const coupon = await model.couponDetail(Number(req.params.no));
+  res.render('detail', { coupon, toStar });
 });
 
 router.get('/:page.html', function(req, res, next) {
