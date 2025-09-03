@@ -9,6 +9,12 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+// TODO Node.js에서 프로젝트의 의존성을 관리하고 npm 스크립트를 정의하는 파일은?
+// package.json
+
+// TODO Node.js 웹 프레임워크로, 빠르고 간단한 서버를 구축하는 사용되는 프레임워크는?
+// Express
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

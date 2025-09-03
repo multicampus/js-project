@@ -57,6 +57,7 @@ module.exports.couponList = async (qs={}) => {
 	
 	// 쿠폰 목록을 조회한다.
   const count = 5;
+  // TODO MongoDB에서 데이터 조회에 사용하는 메서드
   const result = await db.coupon.find(query).project(fields).limit(count).toArray();
 	console.log(`${result.length} 건 조회.`);
   console.log(result);
@@ -131,9 +132,11 @@ module.exports.buyCoupon = async (params) => {
     // 구매 정보를 등록한다.
     const sequence = await db.sequence.findOneAndUpdate({ _id: 'purchase' }, { $inc: { value: 1 } });
     document._id = sequence.value;
+    // TODO MongoDB에서 새로운 데이터 한건 추가에 사용되는 메서드
     const result = await db.purchase.insertOne(document);
     
     // 쿠폰 구매 건수를 증가시킨다.
+    // TODO 하나의 문서를 업데이트한다.
     await db.coupon.updateOne({ _id: document.couponId }, { $inc: { buyQuantity: document.quantity } });
     return result.insertedId;
   }catch(err){
