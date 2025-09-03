@@ -127,11 +127,20 @@ module.exports.buyCoupon = async (params) => {
 		regDate: moment().format('YYYY-MM-DD HH:mm:ss')
 	};
 
-	// TODO 구매 정보를 등록한다.
-	
-	// TODO 쿠폰 구매 건수를 하나 증가시킨다.
-	
-};	
+  try{
+    // 구매 정보를 등록한다.
+    const sequence = await db.sequence.findOneAndUpdate({ _id: 'purchase' }, { $inc: { value: 1 } });
+    document._id = sequence.value;
+    const result = await db.purchase.insertOne(document);
+    
+    // 쿠폰 구매 건수를 증가시킨다.
+    await db.coupon.updateOne({ _id: document._id }, { $inc: { buyQuantity: document.quantity } });
+    return result.insertedId;
+  }catch(err){
+    console.error(err);
+    throw new Error('쿠폰 구매에 실패했습니다. 잠시후 다시 요청하시기 바랍니다.');
+  }
+};
 	
 // 추천 쿠폰 조회
 const topCoupon = module.exports.topCoupon = async (condition) => {

@@ -6,7 +6,7 @@ const { toStar } = require('../utils/myutil');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.redirect('/today.html');
+  res.redirect('/today');
 });
 
 // 오늘 메뉴
@@ -25,6 +25,16 @@ router.get('/coupons/:no', async function(req, res, next) {
 router.get('/purchase/:no', async function(req, res, next) {
   const coupon = await model.buyCouponForm(Number(req.params.no));
   res.render('buy', { coupon });
+});
+
+// 쿠폰 구매 처리
+router.post('/purchase', async function(req, res, next) {
+  try{
+    const purchaseId = await model.buyCoupon(req.body);
+    res.end(String(purchaseId));
+  }catch(err){
+    res.json({ errors: { message: err.message } });
+  }
 });
 
 router.get('/:page.html', function(req, res, next) {
