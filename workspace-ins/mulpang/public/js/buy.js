@@ -22,7 +22,7 @@ function setBuyEvent(){
       alert(result.errors.message);
     }else{
       alert('쿠폰 구매가 완료 되었습니다.');
-      // location.href = '/';
+      location.href = '/';
     }
   });
 }

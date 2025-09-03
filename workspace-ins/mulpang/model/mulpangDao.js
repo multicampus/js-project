@@ -134,7 +134,7 @@ module.exports.buyCoupon = async (params) => {
     const result = await db.purchase.insertOne(document);
     
     // 쿠폰 구매 건수를 증가시킨다.
-    await db.coupon.updateOne({ _id: document._id }, { $inc: { buyQuantity: document.quantity } });
+    await db.coupon.updateOne({ _id: document.couponId }, { $inc: { buyQuantity: document.quantity } });
     return result.insertedId;
   }catch(err){
     console.error(err);
