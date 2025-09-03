@@ -56,7 +56,7 @@ module.exports.couponList = async (qs={}) => {
 	};
 	
 	// 쿠폰 목록을 조회한다.
-  const count = 5;
+  const count = 0;
   // TODO MongoDB에서 데이터 조회에 사용하는 메서드
   const result = await db.coupon.find(query).project(fields).limit(count).toArray();
 	console.log(`${result.length} 건 조회.`);
