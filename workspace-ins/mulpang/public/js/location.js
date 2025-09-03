@@ -19,16 +19,21 @@ function initMap(){
     // 1.1 구글맵 로딩
     const mapContainer = document.querySelector('#location_map');
     let mapOptions = {
-      mapId: '',
-      center: { lat: 37.523622, lng: 127.031330},
+      center: { lat: 37.523622, lng: 127.031330 },
       zoom: 14
     };
     map = new google.maps.Map(mapContainer, mapOptions);
 
     // 1.2 현재 위치 찾기
+    navigator.geolocation.getCurrentPosition(success, fail);
     
     function success(position){
       // 1.3 지도를 현재 위치로 이동
+      let here = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      map.setCenter(here);
       
       // 1.4 현재 위치에 마커 표시
       
