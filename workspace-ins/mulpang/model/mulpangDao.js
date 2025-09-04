@@ -57,8 +57,12 @@ module.exports.couponList = async (qs={}) => {
 	// 정렬 옵션
 	const orderBy = {};
 	// 1. 사용자 지정 정렬 옵션	
+  const orderCondition = qs.order;
+  if(orderCondition) orderBy[orderCondition] = -1; // 내림차순
 	// 2. 판매 시작일 내림차순(최근 쿠폰)	
+  orderBy['saleDate.start'] = -1;
 	// 3. 판매 종료일 오름차순(종료 임박 쿠폰)
+  orderBy['saleDate.finish'] = 1; // 오름차순
 
 	// 출력할 속성 목록
 	const fields = {
@@ -77,7 +81,7 @@ module.exports.couponList = async (qs={}) => {
 	// 쿠폰 목록을 조회한다.
   const count = 0;
   // TODO MongoDB에서 데이터 조회에 사용하는 메서드
-  const result = await db.coupon.find(query).project(fields).limit(count).toArray();
+  const result = await db.coupon.find(query).project(fields).sort(orderBy).limit(count).toArray();
 	console.log(`${result.length} 건 조회.`);
   // console.log(result);
   return result;
