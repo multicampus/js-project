@@ -28,12 +28,31 @@ main()
 
 // 쿠폰 목록조회
 module.exports.couponList = async (qs={}) => {
+  const now = moment().format('YYYY-MM-DD');
+
 	// 검색 조건
 	const query = {};
 	// 1. 판매 시작일이 지난 쿠폰, 구매 가능 쿠폰(기본 검색조건)	
+  query['saleDate.start'] = { $lte: now };
+  query['saleDate.finish'] = { $gte: now };
 	// 2. 전체/구매가능/지난쿠폰
-	// 3. 지역명	
+  switch(qs.date){
+    case 'all':
+      delete query['saleDate.finish'];
+      break;
+    case 'past':
+      query['saleDate.finish'] = { $lt: now };
+      break;
+  }
+	// 3. 지역명
+  const location = qs.location;
+  if(location) query['region'] = location;
 	// 4. 검색어	
+  const keyword = qs.keyword;
+  if(keyword && keyword.trim() !== ''){
+    const regExp = new RegExp(keyword, 'i'); // i: 대소문자 구별 안함
+    query['$or'] = [{ couponName: regExp }, { desc: regExp }];
+  }
 
 	// 정렬 옵션
 	const orderBy = {};
@@ -60,7 +79,7 @@ module.exports.couponList = async (qs={}) => {
   // TODO MongoDB에서 데이터 조회에 사용하는 메서드
   const result = await db.coupon.find(query).project(fields).limit(count).toArray();
 	console.log(`${result.length} 건 조회.`);
-  console.log(result);
+  // console.log(result);
   return result;
 };
 
@@ -153,7 +172,13 @@ const topCoupon = module.exports.topCoupon = async (condition) => {
 	const orderBy = {
     [condition]: -1
   };
+
+  const query = {};
+  const now = moment().format('YYYY-MM-DD');
+  query['saleDate.start'] = { $lte: now };
+  query['saleDate.finish'] = { $gte: now };
   const list = await db.coupon.aggregate([
+    { $match: query },
     { $sort: orderBy },
     { $limit: 5 },
     {
