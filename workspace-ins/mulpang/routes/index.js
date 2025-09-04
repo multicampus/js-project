@@ -11,8 +11,20 @@ router.get('/', function(req, res, next) {
 
 // 오늘 메뉴
 router.get('/today', async function(req, res, next) {
+  req.query.page = Number(req.query.page) || 1;
+
   const list = await model.couponList(req.query);
-  res.render('today', { list, options: generateOptions, query: req.query });
+
+  const params = {};
+
+  if(req.query.page > 1){
+    params.prePage = (new URLSearchParams({ ...req.query, page: req.query.page-1 })).toString();
+  }
+  if(req.query.page < list.totalPage){
+    params.nextPage = (new URLSearchParams({ ...req.query, page: req.query.page+1 })).toString();
+  }
+
+  res.render('today', { list, params, options: generateOptions, query: req.query });
 });
 
 // 쿠폰 상세 조회 화면
