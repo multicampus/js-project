@@ -54,7 +54,8 @@ router.get('/topCoupon', async function(req, res, next){
 });
 // 모두 메뉴
 router.get('/all', async function(req, res, next){
-  res.render('all');
+  const list = await model.couponList();
+  res.render('all', { list });
 });
 // 쿠폰 남은 수량 조회
 router.get('/couponQuantity', async function(req, res, next){
