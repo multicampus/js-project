@@ -8,9 +8,9 @@ function testChart(){
   ];
 	
 	drawSaleGraph(data);	
-	// drawPointGraph(data);
-	// drawViewGraph(data);
-	// drawReplyGraph(data);
+	drawPointGraph(data);
+	drawViewGraph(data);
+	drawReplyGraph(data);
 }
 
 $(() => {
