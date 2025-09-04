@@ -6,7 +6,7 @@ const path = require('node:path');
 const mime = require('mime');
 
 // __dirname: 현재 파일의 절대 경로
-const home = path.join(__dirname, 'design');
+const home = path.join(__dirname, 'c:\publish');
 
 // HTTP 서버 생성
 // 클라이언트의 요청이 발생하면 호출되는 콜백 함수 등록

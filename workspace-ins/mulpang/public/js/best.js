@@ -16,6 +16,9 @@ function testChart(){
   $.getJSON('/topCoupon', { condition: 'satisfactionAvg' }, drawPointGraph);
   $.getJSON('/topCoupon', { condition: 'viewCount' }, drawViewGraph);
   $.getJSON('/topCoupon', { condition: 'epilogueCount' }, drawReplyGraph);
+
+  const socket = io();
+  socket.on('top5', drawViewGraph);
 }
 
 $(() => {
