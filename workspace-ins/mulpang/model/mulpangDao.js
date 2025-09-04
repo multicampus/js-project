@@ -147,7 +147,20 @@ module.exports.buyCoupon = async (params) => {
 	
 // 추천 쿠폰 조회
 const topCoupon = module.exports.topCoupon = async (condition) => {
-	
+	const orderBy = {
+    [condition]: -1
+  };
+  const list = await db.coupon.aggregate([
+    { $sort: orderBy },
+    { $limit: 5 },
+    {
+      $project: {
+        couponName: 1,
+        value: '$' + condition
+      }
+    }
+  ]).toArray();
+  return list;
 };
 
 // 지정한 쿠폰 아이디 목록을 받아서 남은 수량을 넘겨준다.

@@ -7,10 +7,15 @@ function testChart(){
     {couponName: '치맥', value: 50}
   ];
 	
-	drawSaleGraph(data);	
-	drawPointGraph(data);
-	drawViewGraph(data);
-	drawReplyGraph(data);
+	// drawSaleGraph(data);	
+	// drawPointGraph(data);
+	// drawViewGraph(data);
+	// drawReplyGraph(data);
+
+  $.getJSON('/topCoupon', { condition: 'buyQuantity' }, drawSaleGraph);
+  $.getJSON('/topCoupon', { condition: 'satisfactionAvg' }, drawPointGraph);
+  $.getJSON('/topCoupon', { condition: 'viewCount' }, drawViewGraph);
+  $.getJSON('/topCoupon', { condition: 'epilogueCount' }, drawReplyGraph);
 }
 
 $(() => {
