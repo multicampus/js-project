@@ -22,7 +22,7 @@ common.cart.showCart = () => {
   common.cart.setRemoveCartEvent();
 
   // TODO 알림메세지 승인시 관심쿠폰 수량 요청 시작
-  
+  common.cart.requestQuantity();
 };
 
 // 관심쿠폰 삭제 이벤트
@@ -66,7 +66,7 @@ common.cart.requestQuantity = () => {
 
 // 바탕화면 알림 서비스를 보여준다.
 common.cart.showNoti = (noti) => {	
-	
+	console.log(noti);
 };
 
 
