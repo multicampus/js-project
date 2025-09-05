@@ -8,6 +8,7 @@ const dest = path.join(__dirname, '..', 'public', 'tmp');
 
 const model = require('../model/mulpangDao');
 const checkLogin = require('../middleware/checklogin');
+const { toStar } = require('../utils/myutil');
 
 // 회원 가입 화면
 router.get('/new', function(req, res, next) {
@@ -58,7 +59,9 @@ router.post('/login', async function(req, res, next) {
 });
 // 마이 페이지
 router.get('/', checkLogin, async function(req, res, next) {
-  res.render('mypage');
+  const userid = req.session.user._id;
+  const purchases = await model.getMember(userid);
+  res.render('mypage', { purchases, toStar });
 });
 // 회원 정보 수정
 router.put('/', checkLogin, async function(req, res, next) {
