@@ -11,6 +11,7 @@ $(() => {
 // 관심쿠폰을 보여준다.
 common.cart.showCart = () => {
   const cartList = $('#cart > ul').empty();
+  // TODO 웹 애플리케이션의 로컬 스토리지를 관리하는 API
   const cart = JSON.parse(localStorage.getItem('cart') || '{}');
   for(const couponId in cart){
     const coupon = cart[couponId];
@@ -66,6 +67,7 @@ common.cart.requestQuantity = () => {
 
 // 바탕화면 알림 서비스를 보여준다.
 common.cart.showNoti = (noti) => {	
+  // TODO 브라우저에서 사용자와 상호작용을 위한 알림 기능 API
 	const notify = new Notification('마감 임박!!!', noti);
   notify.onclick = function(){
     notify.close();

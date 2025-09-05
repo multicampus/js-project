@@ -26,6 +26,7 @@ function initMap(){
     map = new google.maps.Map(mapContainer, mapOptions);
 
     // 1.2 현재 위치 찾기
+    // TODO 사용자의 현재 위치 정보를 조회하는 메서드(한번)
     navigator.geolocation.getCurrentPosition(success, fail);
     
     function success(position){
