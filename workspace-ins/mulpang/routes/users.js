@@ -6,6 +6,8 @@ const multer = require('multer');
 
 const dest = path.join(__dirname, '..', 'public', 'tmp');
 
+const model = require('../model/mulpangDao');
+
 // 회원 가입 화면
 router.get('/new', function(req, res, next) {
   res.render('join');
@@ -17,7 +19,12 @@ router.post('/profileUpload', multer({ dest }).single('profile'), function(req, 
 });
 // 회원 가입 요청
 router.post('/new', async function(req, res, next) {
-  res.end('success');
+  try{
+    const result = await model.registMember(req.body);
+    res.end(result);
+  }catch(err){
+    res.json({ errors: { message: err.message } });
+  }
 });
 // 간편 로그인
 router.post('/simpleLogin', async function(req, res, next) {
