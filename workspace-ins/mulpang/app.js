@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const nocache = require('nocache');
+const session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -20,10 +21,33 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// 미들웨어(app.use(), router에 등록하는 함수)
+// req, res, next를 매개변수로 갖는 함수로 작성
+// 1. 처리하고 싶은 작업을 수행한다.
+// 2. 둘중 하나의 작업으로 종료한다.
+//  1) 다음 미들웨어를 호출한다.(next())
+//  2) 클라이언트에 응답메세지를 전송한다.(res.render(), res.json(), res.redirect(), res.end() ... )
+app.use(function(req, res, next){
+  console.log('첫번째 미들웨어');
+  console.log('req.body', req.body);
+  console.log('req.cookies', req.cookies);
+  console.log('req.session', req.session);
+  next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use(function(req, res, next){
+  console.log('두번째 미들웨어');
+  console.log('req.body', req.body);
+  console.log('req.cookies', req.cookies);
+  console.log('req.session', req.session);
+  next();
+});
 
 app.use(logger('dev'));
 
