@@ -28,7 +28,7 @@ $(() => {
 // 판매순 그래프를 그린다.(Canvas)
 function drawSaleGraph(data){
 	const context = document.querySelector('#graph_by_sale').getContext('2d');
-	// TODO x, y 축 그리기
+	// x, y 축 그리기
   context.beginPath();
   context.moveTo(70, 10);
   context.lineTo(70, 231);
