@@ -65,10 +65,29 @@ router.get('/', checkLogin, async function(req, res, next) {
 });
 // 회원 정보 수정
 router.put('/', checkLogin, async function(req, res, next) {
-  res.end('success');
+  const userid = req.session.user._id;
+  try{
+    await model.updateMember(userid, req.body);
+    res.end('success');
+  }catch(err){
+    res.json({ errors: { message: err.message } });
+  }
 });
 // 구매 후기 등록
 router.post('/epilogue', checkLogin, async function(req, res, next) {
+  const userid = req.session.user._id;
+  try{
+    const epilogue = {
+      couponId: Number(req.body.couponId),
+      satisfaction: Number(req.body.satisfaction),
+      purchaseId: Number(req.body.purchaseId),
+      content: req.body.content
+    };
+    const epilogudId = await model.insertEpilogue(userid, epilogue);
+    res.end(String(epilogudId));
+  }catch(err){
+    res.json({ errors: { message: err.message } });
+  }
   res.end('success');
 });
 
