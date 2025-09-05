@@ -7,6 +7,7 @@ const multer = require('multer');
 const dest = path.join(__dirname, '..', 'public', 'tmp');
 
 const model = require('../model/mulpangDao');
+const checkLogin = require('../middleware/checklogin');
 
 // 회원 가입 화면
 router.get('/new', function(req, res, next) {
@@ -47,18 +48,24 @@ router.get('/login', function(req, res, next) {
 });
 // 로그인
 router.post('/login', async function(req, res, next) {
-  res.redirect('/');
+  try{
+    const user = await model.login(req.body);
+    req.session.user = user;
+    res.redirect(req.session.backurl || '/');
+  }catch(err){
+    res.render('login', { errors: err });
+  }
 });
 // 마이 페이지
-router.get('/', async function(req, res, next) {
+router.get('/', checkLogin, async function(req, res, next) {
   res.render('mypage');
 });
 // 회원 정보 수정
-router.put('/', async function(req, res, next) {
+router.put('/', checkLogin, async function(req, res, next) {
   res.end('success');
 });
 // 구매 후기 등록
-router.post('/epilogue', async function(req, res, next) {
+router.post('/epilogue', checkLogin, async function(req, res, next) {
   res.end('success');
 });
 
