@@ -43,8 +43,13 @@ router.get('/purchase/:no', async function(req, res, next) {
 // 쿠폰 구매 처리
 router.post('/purchase', async function(req, res, next) {
   try{
-    const purchaseId = await model.buyCoupon(req.body);
-    res.end(String(purchaseId));
+    if(req.session.user){ // 로그인된 경우
+      req.body.userid = req.session.user._id;
+      const purchaseId = await model.buyCoupon(req.body);
+      res.end(String(purchaseId));
+    }else{
+      res.json({ errors: { message: '로그인 후 구매 가능합니다.' } });
+    }
   }catch(err){
     res.json({ errors: { message: err.message } });
   }
